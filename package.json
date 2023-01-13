@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/fred-haun/CIT270/issues"
   },
-  "homepage": "https://github.com/fred-haun/CIT270#readme"
+  "homepage": "https://github.com/fred-haun/CIT270#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
 }
