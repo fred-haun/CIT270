@@ -14,16 +14,29 @@ const {v4: uuidv4} = require("uuid");
 
 app.use(bodyParser.json());
 
+app.use(express.static("public"));
+const cookieParser = require("cookie-parser");
+app.use(cookieParser());
+//code for teaching
 app.get("/", (req,res) => {
     res.send("Hello Freddy!");
 });
 
-app.post("/login", (req, res) => {
+app.get("/validate",async (req,res)=>{
+    const loginToken = req.cookies.steadicookie;
+    const loginUser = await redisClient.hGet("TokenMap",loginToken);
+    res.send(loginUser);
+});
+
+app.post("/login",async (req, res) => {
     const loginUser = req.body.userName;
     const loginPassword = req.body.password;
     console.log("Login username: " + loginUser);
-    if (loginUser == "2legit2quit@gmail.com" && loginPassword == "Thisis@pa55word"){
+    const correctPassword = await redisClient.hGet("UserMap",loginUser);
+    if (correctPassword==loginPassword){
         const loginToken = uuidv4();
+        await redisClient.hSet("TokenMap",loginToken,loginUser);
+        res.cookie("stedicookie",loginToken);
         res.send(loginToken);
     } else{
         res.status(401);
