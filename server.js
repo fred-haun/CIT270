@@ -17,7 +17,14 @@ app.use(bodyParser.json());
 app.use(express.static("public"));
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());
-//code for teaching
+
+app.post("/rapidsteptest",async (req, res)=>{
+    const steps = req.body;
+    await redisClient.zAdd,0("Steps",steps);
+    console.log("Steps", steps);
+    res.send("saved");
+})
+
 app.get("/", (req,res) => {
     res.send("Hello Freddy!");
 });
@@ -39,7 +46,7 @@ app.post("/login",async (req, res) => {
         await redisClient.hSet("TokenMap",loginToken,loginUser);
         res.cookie("stedicookie",loginToken);
         res.send(loginToken);
-    } else{
+    } else {
         res.status(401);
         res.send("incorrect password for " + loginUser);
     }
