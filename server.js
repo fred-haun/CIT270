@@ -23,7 +23,8 @@ app.get("/", (req,res) => {
 });
 
 app.get("/validate",async (req,res)=>{
-    const loginToken = req.cookies.steadicookie;
+    const loginToken = req.cookies.stedicookie;
+    console.log("loginToken", loginToken);
     const loginUser = await redisClient.hGet("TokenMap",loginToken);
     res.send(loginUser);
 });
