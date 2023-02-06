@@ -51,7 +51,6 @@
             },
             headers: { "suresteps.session.token": usertoken},
             contentType: "application/json",
-            dataType: 'text'
         });
 
     }
@@ -203,6 +202,3 @@
         second = second - 60 * minute + '';
         return minute + ':' + second + ':' + decisec;
     }
-    
-
-
